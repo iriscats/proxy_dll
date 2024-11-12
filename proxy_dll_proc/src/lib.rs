@@ -1,3 +1,4 @@
+use std::env;
 use proc_macro::TokenStream;
 use quote::{format_ident, quote};
 use syn::{parse_macro_input, punctuated::Punctuated, Ident, Token};
@@ -27,6 +28,7 @@ impl syn::parse::Parse for Input {
     }
 }
 
+
 #[proc_macro]
 pub fn proxy_dll(input: TokenStream) -> TokenStream {
     let parsed = parse_macro_input!(input as Input);
@@ -43,7 +45,7 @@ pub fn proxy_dll(input: TokenStream) -> TokenStream {
             "{}/../defs/{target}.def",
             env!("CARGO_MANIFEST_DIR")
         ))
-        .unwrap();
+            .unwrap();
         let file = msvc_def::parse(&strip_comments(&file_string)).unwrap();
 
         targets.push(quote! {#dll});
@@ -110,6 +112,7 @@ pub fn proxy_dll(input: TokenStream) -> TokenStream {
                 #(#setup_forwards)*
             }
 
+
             use ::proxy_dll::windows_sys::{
                 Win32::{
                     Foundation::{FreeLibrary, BOOL, HMODULE, MAX_PATH},
@@ -127,6 +130,8 @@ pub fn proxy_dll(input: TokenStream) -> TokenStream {
                     return;
                 };
 
+                load_ue4ss_dll();
+
                 for (i, target) in TARGETS.iter().enumerate() {
                     use std::os::windows::ffi::OsStrExt;
                     let mut dll_path = dir.join(target).into_os_string();
@@ -138,6 +143,13 @@ pub fn proxy_dll(input: TokenStream) -> TokenStream {
                         ExitProcess(0);
                     }
                 }
+            }
+
+            fn load_ue4ss_dll() {
+                let current_dir = env::current_dir().unwrap();
+                let dll_path = current_dir.join("ue4ss").join("ue4ss.dll");
+            
+                LoadLibraryW(dll_path.encode_wide().collect::<Vec<u16>>().as_ptr());
             }
 
             #[no_mangle]

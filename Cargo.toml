@@ -10,8 +10,8 @@ members = [
 repository = "https://github.com/trumank/proxy_dll"
 authors = ["trumank"]
 license = "MIT OR Apache-2.0"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 
 [workspace.dependencies]
-msvc_def = "0.1.0"
+msvc_def = "0.1.1"

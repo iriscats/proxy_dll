@@ -14,4 +14,4 @@ version = "0.1.1"
 edition = "2021"
 
 [workspace.dependencies]
-msvc_def = "0.1.1"
+msvc_def = "0.1.0"

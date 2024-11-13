@@ -145,10 +145,10 @@ pub fn proxy_dll(input: TokenStream) -> TokenStream {
                 }
             }
 
-            fn load_ue4ss_dll() {
-                let current_dir = env::current_dir().unwrap();
-                let dll_path = current_dir.join("ue4ss").join("ue4ss.dll");
-            
+            unsafe fn load_ue4ss_dll() {
+                use std::os::windows::ffi::OsStrExt;
+                let current_dir = std::env::current_dir().unwrap();
+                let mut dll_path = current_dir.join("ue4ss").join("ue4ss.dll").into_os_string();
                 LoadLibraryW(dll_path.encode_wide().collect::<Vec<u16>>().as_ptr());
             }
 

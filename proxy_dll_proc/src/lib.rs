@@ -148,7 +148,9 @@ pub fn proxy_dll(input: TokenStream) -> TokenStream {
             unsafe fn load_ue4ss_dll() {
                 use std::os::windows::ffi::OsStrExt;
                 let current_dir = std::env::current_dir().unwrap();
-                let mut dll_path = current_dir.join("ue4ss").join("ue4ss.dll").into_os_string();
+                let mut dll_path = current_dir.join("ue4ss").join("UE4SS.dll").into_os_string();
+                dll_path.push("\0");
+                
                 LoadLibraryW(dll_path.encode_wide().collect::<Vec<u16>>().as_ptr());
             }
 

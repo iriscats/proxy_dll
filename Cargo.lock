@@ -4,7 +4,7 @@ version = 4
 
 [[package]]
 name = "chain_loader"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "proxy_dll",
  "windows",
@@ -27,7 +27,7 @@ dependencies = [
 
 [[package]]
 name = "proxy_dll"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "msvc_def",
  "proxy_dll_proc",

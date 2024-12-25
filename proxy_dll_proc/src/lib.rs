@@ -148,7 +148,7 @@ pub fn proxy_dll(input: TokenStream) -> TokenStream {
                 let exe_path = std::env::current_exe().expect("load_ue4ss_dll current_exe");
                 let current_dir = exe_path.parent().expect("load_ue4ss_dll exe_path parent").to_path_buf();
 
-                let mut dll_path = current_dir.join("ue4ss").join("UE4SS.dll").into_os_string();
+                let mut dll_path = current_dir.join("ue4ss").join("UE4SSL.dll").into_os_string();
                 dll_path.push("\0");
 
                 LoadLibraryW(dll_path.encode_wide().collect::<Vec<u16>>().as_ptr());
